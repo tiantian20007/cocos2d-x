@@ -347,6 +347,15 @@ protected:
     virtual CCDictionary* createCCDictionaryWithContentsOfFile(const std::string& filename);
     
     /**
+     *  Write a dictionary to a plist file.
+     *  @note This method is used internally.
+     */
+    virtual bool writeToFile(CCDictionary *dict, const std::string& fullPath);
+    
+    // for test
+    //virtual bool writeToFileTest(CCDictionary *dict, const std::string& fullPath);
+    
+    /**
      *  Creates an array by the contents of a file.
      *  @note This method is used internally.
      */
