@@ -230,6 +230,11 @@ std::string CCFileUtilsMac::getWritablePath()
 
 bool CCFileUtilsMac::isFileExist(const std::string& strFilePath)
 {
+    if (0 == strFilePath.length())
+    {
+        return false;
+    }
+    
     bool bRet = false;
     
     if (strFilePath[0] != '/')
