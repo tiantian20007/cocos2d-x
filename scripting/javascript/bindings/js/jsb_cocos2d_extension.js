@@ -135,6 +135,7 @@ cc.EDITBOX_INPUT_FLAG_INITIAL_CAPS_SENTENCE = 3;
  */
 cc.EDITBOX_INPUT_FLAG_INITIAL_CAPS_ALL_CHARACTERS = 4;
 
+/*
 // PhysicsDebugNode
 cc.PhysicsDebugNode.create = function( space ) {
     var s = space;
@@ -156,8 +157,9 @@ cc.PhysicsSprite.prototype.setBody = function( body ) {
         b = body.handle;
     return this._setCPBody( b );
 };
+*/
 
 cc.ScrollView.extend = cc.Class.extend;
 cc.TableView.extend = cc.Class.extend;
 cc.TableViewCell.extend = cc.Class.extend;
-cc.GLNode.extend = cc.Class.extend;
+//cc.GLNode.extend = cc.Class.extend;
