@@ -67,6 +67,16 @@ enum {
     kCCNodeOnCleanup
 };
 
+enum
+{
+    kCCPositionTypeRelativeBottomLeft,
+    kCCPositionTypeRelativeTopLeft,
+    kCCPositionTypeRelativeTopRight,
+    kCCPositionTypeRelativeBottomRight,
+    kCCPositionTypePercent,
+    kCCPositionTypeMultiplyResolution,
+};
+
 /** @brief CCNode is the main element. Anything that gets drawn or contains things that get drawn is a CCNode.
  The most popular CCNodes are: CCScene, CCLayer, CCSprite, CCMenu.
 
@@ -323,6 +333,29 @@ public:
     virtual float getPositionX(void);
     virtual void  setPositionY(float y);
     virtual float getPositionY(void);
+    
+    
+    
+    /**
+     `* Gets/Sets relativePosition
+     * relativePosition is the position which relative to its parent
+     */
+    virtual void setRelativePosition(const CCPoint& point);
+    virtual CCPoint& getRelativePosition();
+    
+    /**
+     `* Gets/Sets relativePosition type
+     * relativePosition is the position which relative to its parent
+     * type is the relative type
+     * kCCBPositionTypeRelativeBottomLeft,
+     * kCCBPositionTypeRelativeTopLeft,
+     * kCCBPositionTypeRelativeTopRight,
+     * kCCBPositionTypeRelativeBottomRight,
+     * kCCBPositionTypePercent,
+     * kCCBPositionTypeMultiplyResolution,
+     */
+    virtual void setRelativePositionType(int type);
+    virtual int  getRelativePositionType();
     
     
     /**
@@ -1312,6 +1345,10 @@ private:
     
     /// Convert cocos2d coordinates to UI windows coordinate.
     CCPoint convertToWindowSpace(const CCPoint& nodePoint);
+    
+    // when content size changed, revise all children's position according to relative type
+    void ReviseChildrenPosition();
+    CCPoint getAbsolutePosition(const CCPoint &pt, int nType);
 
 protected:
     float m_fRotationX;                 ///< rotation angle on x-axis
@@ -1376,6 +1413,9 @@ protected:
     int m_nScriptHandler;               ///< script handler for onEnter() & onExit(), used in Javascript binding and Lua binding.
     int m_nUpdateScriptHandler;         ///< script handler for update() callback per frame, which is invoked from lua & javascript.
     ccScriptType m_eScriptType;         ///< type of script binding, lua or javascript
+    
+    int     m_posType;
+    CCPoint m_relativePosition;
 };
 
 //#pragma mark - CCNodeRGBA
