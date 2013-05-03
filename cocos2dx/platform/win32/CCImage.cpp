@@ -375,7 +375,6 @@ bool CCImage::initWithString(
                                int             nSize/* = 0*/)
 {
     bool bRet = false;
-	unsigned char * pImageData = 0;
     do 
     {
         CC_BREAK_IF(! pText);       
@@ -397,9 +396,9 @@ bool CCImage::initWithString(
         int height = (size.cy / 2) * 2 + 2;
         
         // alloc image data buffer
-        pImageData = new unsigned char[width * height * 4];
-        CC_BREAK_IF(! pImageData);
-        memset(pImageData, 0, width * height * 4);
+        m_pData = new unsigned char[width * height * 4];
+        CC_BREAK_IF(! m_pData);
+        memset(m_pData, 0, width * height * 4);
 
         struct
         {
