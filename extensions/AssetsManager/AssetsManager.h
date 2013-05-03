@@ -112,11 +112,12 @@ public:
      */
     void setStoragePath(const char* storagePath);
     
+    static bool createDirectory(const char *path);
+    
 protected:
     bool downLoad();
     void checkStoragePath();
     bool uncompress();
-    bool createDirectory(const char *path);
     void setSearchPath();
     
 private:
