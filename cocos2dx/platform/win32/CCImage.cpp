@@ -375,6 +375,7 @@ bool CCImage::initWithString(
                                int             nSize/* = 0*/)
 {
     bool bRet = false;
+	unsigned char * pImageData = 0;
     do 
     {
         CC_BREAK_IF(! pText);       
