@@ -586,7 +586,7 @@ void CCDirector::popToRootScene(void)
 void CCDirector::popToSceneStackLevel(int level)
 {
     CCAssert(m_pRunningScene != NULL, "A running Scene is needed");
-    unsigned int c = m_pobScenesStack->count();
+    int c = (int)m_pobScenesStack->count();
 
     // level 0? -> end
     if (level == 0)
@@ -960,7 +960,9 @@ void CCDisplayLinkDirector::startAnimation(void)
     }
 
     m_bInvalid = false;
+#ifndef EMSCRIPTEN
     CCApplication::sharedApplication()->setAnimationInterval(m_dAnimationInterval);
+#endif // EMSCRIPTEN
 }
 
 void CCDisplayLinkDirector::mainLoop(void)
