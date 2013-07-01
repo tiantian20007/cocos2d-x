@@ -1326,6 +1326,9 @@ public:
      */
     virtual void removeAllComponents();
     /// @} end of component functions
+	
+	/// Convert cocos2d coordinates to UI windows coordinate.
+    CCPoint convertToWindowSpace(const CCPoint& nodePoint);
 
 private:
     /// lazy allocs
@@ -1337,8 +1340,6 @@ private:
     /// Removes a child, call child->onExit(), do cleanup, remove it from children array.
     void detachChild(CCNode *child, bool doCleanup);
     
-    /// Convert cocos2d coordinates to UI windows coordinate.
-    CCPoint convertToWindowSpace(const CCPoint& nodePoint);
 
 protected:
     float m_fRotationX;                 ///< rotation angle on x-axis
