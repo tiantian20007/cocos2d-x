@@ -177,17 +177,13 @@ void CCNotificationCenter::postNotification(const char *name, CCObject *object)
             continue;
         
         if (!strcmp(name,observer->getName()) && (observer->getObject() == object || observer->getObject() == NULL || object == NULL))
-        {
-            if (0 != observer->getHandler())
-            {
-                CCScriptEngineProtocol* engine = CCScriptEngineManager::sharedManager()->getScriptEngine();
-                engine->executeNotificationEvent(this, name);
-            }
-            else
-            {
-                observer->performSelector(object);
-            }
-        }
+            observer->performSelector(object);
+    }
+
+    if (0 != observer->getHandler())
+    {
+        CCScriptEngineProtocol* engine = CCScriptEngineManager::sharedManager()->getScriptEngine();
+        engine->executeNotificationEvent(this, name, object);
     }
 }
 
@@ -239,7 +235,7 @@ CCNotificationObserver::CCNotificationObserver(CCObject *target,
     
     string orig (name);
     orig.copy(m_name,strlen(name),0);
-    m_nHandler = 0;
+    m_nHandler = 1;
 }
 
 CCNotificationObserver::~CCNotificationObserver()
