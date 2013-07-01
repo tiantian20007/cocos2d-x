@@ -33,7 +33,7 @@
 
 #define getEditBoxImplIOS() ((cocos2d::extension::CCEditBoxImplIOS*)editBox_)
 
-static const int CC_EDIT_BOX_PADDING = 5;
+static const int CC_EDIT_BOX_PADDING = 10;
 
 @implementation CustomUITextField
 - (CGRect)textRectForBounds:(CGRect)bounds {
