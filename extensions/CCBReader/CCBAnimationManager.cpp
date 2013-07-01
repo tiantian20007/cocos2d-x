@@ -178,9 +178,9 @@ CCBAnimationManagerDelegate* CCBAnimationManager::getDelegate()
 
 void CCBAnimationManager::setDelegate(CCBAnimationManagerDelegate *pDelegate)
 {
-    CC_SAFE_RELEASE(dynamic_cast<CCObject*>(mDelegate));
+    //CC_SAFE_RELEASE(dynamic_cast<CCObject*>(mDelegate));
     mDelegate = pDelegate;
-    CC_SAFE_RETAIN(dynamic_cast<CCObject*>(mDelegate));
+    //CC_SAFE_RETAIN(dynamic_cast<CCObject*>(mDelegate));
 }
 
 const char* CCBAnimationManager::getRunningSequenceName()
