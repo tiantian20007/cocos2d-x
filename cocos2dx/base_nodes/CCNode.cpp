@@ -59,6 +59,8 @@ CCNode::CCNode(void)
 , m_fScaleY(1.0f)
 , m_fVertexZ(0.0f)
 , m_obPosition(CCPointZero)
+, m_relativePosition(CCPointZero)
+, m_posType(0)
 , m_fSkewX(0.0f)
 , m_fSkewY(0.0f)
 , m_obAnchorPointInPoints(CCPointZero)
@@ -327,6 +329,26 @@ void CCNode::setPositionY(float y)
     setPosition(ccp(m_obPosition.x, y));
 }
 
+void CCNode::setRelativePosition(const CCPoint& point)
+{
+    m_relativePosition = point;
+}
+
+CCPoint& CCNode::getRelativePosition()
+{
+    return m_relativePosition;
+}
+
+void CCNode::setRelativePositionType(int type)
+{
+    m_posType = type;
+}
+
+int CCNode::getRelativePositionType()
+{
+    return m_posType;
+}
+
 /// children getter
 CCArray* CCNode::getChildren()
 {
@@ -394,6 +416,10 @@ void CCNode::setAnchorPoint(const CCPoint& point)
     {
         m_obAnchorPoint = point;
         m_obAnchorPointInPoints = ccp(m_obContentSize.width * m_obAnchorPoint.x, m_obContentSize.height * m_obAnchorPoint.y );
+        // make sure m_obAnchorPointInPoints.x & y is even
+        //m_obAnchorPointInPoints.x = (int)(m_obAnchorPointInPoints.x / 2) * 2 + 2;
+        //m_obAnchorPointInPoints.y = (int)(m_obAnchorPointInPoints.y / 2) * 2 + 2;
+        
         m_bTransformDirty = m_bInverseDirty = true;
     }
 }
@@ -411,7 +437,14 @@ void CCNode::setContentSize(const CCSize & size)
         m_obContentSize = size;
 
         m_obAnchorPointInPoints = ccp(m_obContentSize.width * m_obAnchorPoint.x, m_obContentSize.height * m_obAnchorPoint.y );
+        // make sure m_obAnchorPointInPoints.x & y is even
+        //m_obAnchorPointInPoints.x = (int)(m_obAnchorPointInPoints.x / 2) * 2 + 2;
+        //m_obAnchorPointInPoints.y = (int)(m_obAnchorPointInPoints.y / 2) * 2 + 2;
+        
         m_bTransformDirty = m_bInverseDirty = true;
+        
+        // modify all children's position according to it's relative position type
+        ReviseChildrenPosition();
     }
 }
 
@@ -1271,6 +1304,31 @@ CCPoint CCNode::convertTouchToNodeSpaceAR(CCTouch *touch)
     return this->convertToNodeSpaceAR(point);
 }
 
+void CCNode::ReviseChildrenPosition()
+{
+    CCObject* obj = NULL;
+    CCARRAY_FOREACH(m_pChildren, obj)
+    {
+        CCNode* pNode = dynamic_cast<CCNode*>(obj);
+        
+        if (pNode == NULL)
+        {
+            continue;
+        }
+        
+        int type  = pNode->getRelativePositionType();
+        
+        if (type == kCCPositionTypeRelativeBottomLeft)
+        {
+            continue;
+        }
+        
+        CCPoint relativePos = pNode->getRelativePosition();
+        
+        pNode->setPosition(getAbsolutePosition(relativePos, type));
+    }
+}
+
 void CCNode::updateTransform()
 {
     // Recursively iterate over children
@@ -1296,6 +1354,46 @@ void CCNode::removeAllComponents()
 {
     m_pComponentContainer->removeAll();
 }
+CCPoint CCNode::getAbsolutePosition(const CCPoint &pt, int nType)
+{
+    CCPoint absPt = ccp(0,0);
+    if (nType == kCCPositionTypeRelativeBottomLeft)
+    {
+        absPt = pt;
+    }
+    
+    else if (nType == kCCPositionTypeRelativeTopLeft)
+    {
+        absPt.x = pt.x;
+        absPt.y = m_obContentSize.height - pt.y;
+    }
+    else if (nType == kCCPositionTypeRelativeTopRight)
+    {
+        absPt.x = m_obContentSize.width - pt.x;
+        absPt.y = m_obContentSize.height - pt.y;
+    }
+    else if (nType == kCCPositionTypeRelativeBottomRight)
+    {
+        absPt.x = m_obContentSize.width - pt.x;
+        absPt.y = pt.y;
+    }
+    else if (nType == kCCPositionTypePercent)
+    {
+        absPt.x = (int)(m_obContentSize.width * pt.x / 100.0f);
+        absPt.y = (int)(m_obContentSize.height * pt.y / 100.0f);
+    }
+    else if (nType == kCCPositionTypeMultiplyResolution)
+    {
+        // todo
+        float resolutionScale = 1.0f;
+        
+        absPt.x = pt.x * resolutionScale;
+        absPt.y = pt.y * resolutionScale;
+    }
+    
+    return absPt;
+}
+
 
 // CCNodeRGBA
 CCNodeRGBA::CCNodeRGBA()
