@@ -54,7 +54,7 @@ JSBool jsval_to_CCPoint( JSContext *cx, jsval vp, CCPoint *ret )
 #endif // #! JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
 }
 
-
+/*
 JSBool jsval_to_CGPoint( JSContext *cx, jsval vp, cpVect *ret )
 {
 #ifdef JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
@@ -130,3 +130,4 @@ jsval CGPoint_to_jsval( JSContext *cx, cpVect p)
 	return OBJECT_TO_JSVAL(typedArray);
 #endif // ! JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
 }
+*/
