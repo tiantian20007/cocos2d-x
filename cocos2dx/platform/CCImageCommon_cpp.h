@@ -174,7 +174,7 @@ bool CCImage::initWithImageData(void * pData,
         }
         else if (kFmtWebp == eFmt)
         {
-            bRet = _initWithWebpData(pData, nDataLen);
+            //bRet = _initWithWebpData(pData, nDataLen);
             break;
         }
         else if (kFmtRawData == eFmt)
