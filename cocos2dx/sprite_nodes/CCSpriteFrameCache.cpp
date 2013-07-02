@@ -302,7 +302,7 @@ void CCSpriteFrameCache::removeUnusedSpriteFrames(void)
         CCSpriteFrame* spriteFrame = (CCSpriteFrame*)pElement->getObject();
         if( spriteFrame->retainCount() == 1 ) 
         {
-            CCLOG("cocos2d: CCSpriteFrameCache: removing unused frame: %s", pElement->getStrKey());
+            //CCLOG("cocos2d: CCSpriteFrameCache: removing unused frame: %s", pElement->getStrKey());
             m_pSpriteFrames->removeObjectForElememt(pElement);
             bRemoved = true;
         }

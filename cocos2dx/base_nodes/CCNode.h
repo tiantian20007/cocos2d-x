@@ -1359,6 +1359,9 @@ public:
      */
     virtual void removeAllComponents();
     /// @} end of component functions
+	
+	/// Convert cocos2d coordinates to UI windows coordinate.
+    CCPoint convertToWindowSpace(const CCPoint& nodePoint);
 
 private:
     /// lazy allocs
@@ -1370,8 +1373,6 @@ private:
     /// Removes a child, call child->onExit(), do cleanup, remove it from children array.
     void detachChild(CCNode *child, bool doCleanup);
     
-    /// Convert cocos2d coordinates to UI windows coordinate.
-    CCPoint convertToWindowSpace(const CCPoint& nodePoint);
     
     // when content size changed, revise all children's position according to relative type
     void ReviseChildrenPosition();
