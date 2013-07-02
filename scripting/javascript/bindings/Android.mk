@@ -11,10 +11,6 @@ LOCAL_SRC_FILES := ScriptingCore.cpp \
                    jsb_cocos2dx_extension_manual.cpp \
                    js_manual_conversions.cpp \
                    cocosjs_manual_conversions.cpp \
-                   js_bindings_chipmunk_manual.cpp \
-                   js_bindings_chipmunk_functions.cpp \
-                   js_bindings_chipmunk_auto_classes.cpp \
-                   js_bindings_chipmunk_registration.cpp \
                    js_bindings_system_functions.cpp \
                    js_bindings_system_registration.cpp \
                    js_bindings_ccbreader.cpp \
@@ -41,7 +37,6 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
 LOCAL_WHOLE_STATIC_LIBRARIES := spidermonkey_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos2dx_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_extension_static
-LOCAL_WHOLE_STATIC_LIBRARIES += chipmunk_static
 
 LOCAL_LDLIBS := -landroid
 LOCAL_LDLIBS += -llog
@@ -51,4 +46,3 @@ include $(BUILD_STATIC_LIBRARY)
 $(call import-module,scripting/javascript/spidermonkey-android)
 $(call import-module,cocos2dx)
 $(call import-module,extensions)
-$(call import-module,external/chipmunk)
