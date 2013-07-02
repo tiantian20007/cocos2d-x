@@ -139,12 +139,15 @@ public:
      */
     friend void* assetsManagerDownloadAndUncompress(void*);
     friend int assetsManagerProgressFunc(void *, double, double, double, double);
+
+	/* create directory by path
+	 */
+    static bool createDirectory(const char *path);
     
 protected:
     bool downLoad();
     void checkStoragePath();
     bool uncompress();
-    bool createDirectory(const char *path);
     void setSearchPath();
     void sendErrorMessage(ErrorCode code);
     
