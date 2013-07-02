@@ -180,7 +180,7 @@ void CCNotificationCenter::postNotification(const char *name, CCObject *object)
             observer->performSelector(object);
     }
 
-    if (0 != observer->getHandler())
+    if (true)
     {
         CCScriptEngineProtocol* engine = CCScriptEngineManager::sharedManager()->getScriptEngine();
         engine->executeNotificationEvent(this, name, object);
