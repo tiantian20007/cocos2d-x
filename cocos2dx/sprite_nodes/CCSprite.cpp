@@ -120,6 +120,11 @@ CCSprite* CCSprite::createWithSpriteFrame(CCSpriteFrame *pSpriteFrame)
 CCSprite* CCSprite::createWithSpriteFrameName(const char *pszSpriteFrameName)
 {
     CCSpriteFrame *pFrame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(pszSpriteFrameName);
+    if (!pFrame)
+    {
+        CCLOG("error: CCSprite::createWithSpriteFrameName null");
+        return NULL;
+    }
     
 #if COCOS2D_DEBUG > 0
     char msg[256] = {0};
@@ -974,6 +979,12 @@ void CCSprite::updateDisplayedOpacity(GLubyte opacity)
 
 void CCSprite::setDisplayFrame(CCSpriteFrame *pNewFrame)
 {
+    if (!pNewFrame)
+    {
+        CCLOG("CCSprite::setDisplayFrame null");
+        return;
+    }
+    
     m_obUnflippedOffsetPositionFromCenter = pNewFrame->getOffset();
 
     CCTexture2D *pNewTexture = pNewFrame->getTexture();

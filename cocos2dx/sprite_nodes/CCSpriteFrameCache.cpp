@@ -234,7 +234,13 @@ void CCSpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist)
     {
         std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszPlist);
         CCDictionary *dict = CCDictionary::createWithContentsOfFileThreadSafe(fullPath.c_str());
-
+        
+        if (!dict)
+        {
+            CCLOG("error: can't find file %s", fullPath.c_str());
+            return;
+        }
+        
         string texturePath("");
 
         CCDictionary* metadataDict = (CCDictionary*)dict->objectForKey("metadata");
